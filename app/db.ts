@@ -13,7 +13,10 @@ let db: Db | null = null;
 
 async function connect(): Promise<Db> {
     if (!client) {
-        client = new MongoClient(MONGO_URI, {serverSelectionTimeoutMS: 10000,});
+        client = new MongoClient(MONGO_URI, {
+            serverSelectionTimeoutMS: 10000,
+        });
+
         try {
             await client.connect();
         } catch (error) {
