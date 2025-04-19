@@ -10,6 +10,7 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
         const urlsCollection = await getCollection(URLS_COLLECTION);
         console.log("Connected to Mongo, checking alias:", alias);
 
+        // Check if alias exists using the indexed alias field
         const existingAlias = await urlsCollection.findOne({ alias });
 
         if (existingAlias) {
@@ -17,17 +18,20 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
             throw new Error("ALIAS_TAKEN");
         }
 
+        console.log("Inserting new URL...");
+        // Insert the new URL in MongoDB
         await urlsCollection.insertOne({
             _id: new ObjectId(),
             originalUrl,
             alias,
         });
 
-        const baseUrl = "https://mp-5-plum.vercel.app";
-        //const baseUrl = "https://localhost:3000";
+        // Generate the shortened URL using the production base URL
+        const baseUrl = process.env.BASE_URL || "https://mp-5-plum.vercel.app";
+        console.log("Shortened URL:", `${baseUrl}/${alias}`);
         return `${baseUrl}/${alias}`;
     } catch (error) {
         console.error("Error in shortenUrl:", error);
-        throw error;
+        throw error; // Rethrow to propagate error
     }
 }
