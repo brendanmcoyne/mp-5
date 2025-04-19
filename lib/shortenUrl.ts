@@ -8,7 +8,7 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
 
     try {
         const urlsCollection = await getCollection(URLS_COLLECTION);
-        console.log("Connected to Mongo, checking alias:", alias);
+        console.log("Mongo, checking alias:", alias);
         const existingAlias = await urlsCollection.findOne({ alias });
 
         if (existingAlias) {
@@ -22,8 +22,7 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
             alias,
         });
 
-        const baseUrl = process.env.BASE_URL || "https://mp-5-plum.vercel.app";
-        console.log("Shortened URL:", `${baseUrl}/${alias}`);
+        const baseUrl = "https://mp-5-plum.vercel.app";
         return `${baseUrl}/${alias}`;
     } catch (error) {
         console.error("Error in shortenUrl:", error);
