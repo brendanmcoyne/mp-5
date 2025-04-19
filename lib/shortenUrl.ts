@@ -8,7 +8,7 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
     const existingAlias = await urlsCollection.findOne({ alias });
 
     if (existingAlias) {
-        return null;
+        throw new Error("ALIAS_TAKEN");
     }
 
     await urlsCollection.insertOne({
@@ -18,5 +18,6 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
     });
 
     const baseUrl = "https://mp-5-plum.vercel.app/";
+    // const baseUrl = "http://localhost:3000";
     return `${baseUrl}/${alias}`;
 }

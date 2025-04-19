@@ -27,8 +27,15 @@ export default function ShortenUrlForm() {
                 setError("Invalid URL. Please try again.");
             }
         } catch (err) {
-            console.error("Error shortening URL:", err);
-            setError("Error creating shortened URL. Please try again.");
+            if (err instanceof Error) {
+                console.error("Error shortening URL:", err);
+
+                if (err.message === "ALIAS_TAKEN") {
+                    setError("Invalid Alias: This alias has already been used.");
+                } else {
+                    setError("Error creating shortened URL. Please try again.");
+                }
+            }
         }
     };
 
@@ -77,7 +84,7 @@ export default function ShortenUrlForm() {
             )}
 
             {error && (
-                <div className="mt-4 text-red-500">
+                <div className="mt-4 text-red-500 text-align items-center">
                     <p>{error}</p>
                 </div>
             )}
