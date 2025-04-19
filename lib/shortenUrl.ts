@@ -1,3 +1,4 @@
+"use server"
 import { ObjectId } from "mongodb";
 import getCollection, { URLS_COLLECTION } from "@/app/db";
 
@@ -16,5 +17,6 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
         alias,
     });
 
-    return `https://your-app.com/${alias}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    return `${baseUrl}/${alias}`;
 }

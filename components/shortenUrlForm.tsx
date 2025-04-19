@@ -56,7 +56,11 @@ export default function ShortenUrlForm() {
                         placeholder="custom-alias"
                         required
                         value={alias}
-                        onChange={(e) => setAlias(e.target.value)}
+                        onChange={(e) => {
+                            setAlias(e.target.value);
+                            setError("");
+                            setShortenedUrl("");
+                        }}
                     />
                 </div>
                 <button
