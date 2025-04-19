@@ -17,6 +17,6 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
         alias,
     });
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3004";
     return `${baseUrl}/${alias}`;
 }
