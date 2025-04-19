@@ -17,8 +17,10 @@ async function connect(): Promise<Db> {
             serverSelectionTimeoutMS: 10000,
         });
 
+        console.log("🔌 Connecting to MongoDB...");
         try {
             await client.connect();
+            console.log("✅ MongoDB connected!");
         } catch (error) {
             console.error("Error connecting to MongoDB:", error);
             throw new Error("Failed to connect to MongoDB");
