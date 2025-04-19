@@ -12,23 +12,12 @@ let client: MongoClient | null = null;
 let db: Db | null = null;
 
 async function connect(): Promise<Db> {
-    if (!client) {
-        // Set a higher timeout for MongoDB connection
-        client = new MongoClient(MONGO_URI, {
-            serverSelectionTimeoutMS: 10000, // Increase timeout to 10 seconds
-        });
-
-        console.log("🔌 Connecting to MongoDB...");
-        try {
+        if (!client) {
+            client = new MongoClient(MONGO_URI);
             await client.connect();
-            console.log("✅ MongoDB connected!");
-        } catch (error) {
-            console.error("Error connecting to MongoDB:", error);
-            throw new Error("Failed to connect to MongoDB");
         }
+        return client.db(DB_NAME);
     }
-    return client.db(DB_NAME);
-}
 
 export default async function getCollection(collectionName: string): Promise<Collection> {
     if (!db) {
