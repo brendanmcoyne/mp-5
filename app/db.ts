@@ -12,11 +12,15 @@ let client: MongoClient | null = null;
 let db: Db | null = null;
 
 async function connect(): Promise<Db> {
-    console.log("👉 Connecting to MongoDB...");
     if (!client) {
-        client = new MongoClient(MONGO_URI);
+        // ✅ Add the timeout setting here
+        client = new MongoClient(MONGO_URI, {
+            serverSelectionTimeoutMS: 5000, // ⏱ Fail if it takes longer than 5 seconds
+        });
+
+        console.log("🔌 Connecting to MongoDB...");
         await client.connect();
-        console.log("✅ MongoDB connected.");
+        console.log("✅ MongoDB connected!");
     }
     return client.db(DB_NAME);
 }

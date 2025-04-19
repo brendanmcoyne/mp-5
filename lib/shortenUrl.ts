@@ -23,7 +23,8 @@ export default async function shortenUrl(originalUrl: string, alias: string): Pr
             alias,
         });
 
-        const baseUrl = "https://mp-5-plum.vercel.app"; // your static base
+        //const baseUrl = "https://mp-5-plum.vercel.app";
+        const baseUrl = "https://localhost:3000";
         return `${baseUrl}/${alias}`;
     } catch (error) {
         console.error("Error in shortenUrl:", error);
