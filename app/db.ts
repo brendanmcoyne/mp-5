@@ -12,9 +12,11 @@ let client: MongoClient | null = null;
 let db: Db | null = null;
 
 async function connect(): Promise<Db> {
+    console.log("👉 Connecting to MongoDB...");
     if (!client) {
         client = new MongoClient(MONGO_URI);
         await client.connect();
+        console.log("✅ MongoDB connected.");
     }
     return client.db(DB_NAME);
 }
