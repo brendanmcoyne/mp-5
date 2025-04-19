@@ -13,13 +13,11 @@ let db: Db | null = null;
 
 async function connect(): Promise<Db> {
     if (!client) {
-        client = new MongoClient(MONGO_URI, {
-            serverSelectionTimeoutMS: 10000,
-        });
+        client = new MongoClient(MONGO_URI);
 
         try {
             await client.connect();
-            console.log("✅ MongoDB connected!");
+            console.log("MongoDB connected!");
         } catch (error) {
             console.error("Error connecting to MongoDB:", error);
             throw new Error("Failed to connect to MongoDB");
